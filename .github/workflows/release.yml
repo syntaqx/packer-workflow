@@ -36,6 +36,7 @@ jobs:
         echo "ami_id=$ami_id" >> "$GITHUB_OUTPUT"
 
   deploy:
+    runs-on: ubuntu-latest
     needs: [ build ]
     steps:
     -
