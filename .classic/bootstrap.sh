@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+set -aueo pipefail
+
+function wait_for_apt() {
+  while fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
+    echo "Waiting on apt.."
+    sleep 2
+  done
+}
+
+wait_for_apt
 
 # Update apt package index
 sudo apt-get update
@@ -28,7 +38,7 @@ Description=My Docker Container
 
 [Service]
 Restart=always
-ExecStart=/usr/bin/docker run -p 80:80 nginx
+ExecStart=/usr/bin/docker run -p 80:80 syntaqx/packer-docker-workflow
 
 [Install]
 WantedBy=multi-user.target
