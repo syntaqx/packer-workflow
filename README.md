@@ -2,7 +2,7 @@
 
 This project demonstrates a very simple build and release system that leverages
 both [Docker](https://www.docker.com/) and [Packer](https://www.packer.io/) to
-achieve to build immutable artifacts that can be deployed easily on EC2.
+build immutable artifacts that can be deployed easily on EC2.
 
 ## Docker
 
