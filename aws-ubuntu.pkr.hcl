@@ -22,11 +22,6 @@ variable "ami_prefix" {
   default = "classic-example"
 }
 
-variable "docker_image" {
-  type    = string
-  default = "syntaqx/packer-docker-workflow:latest"
-}
-
 source "amazon-ebs" "ubuntu" {
   region        = "${var.aws_region}"
   instance_type = "${var.instance_type}"
@@ -60,9 +55,6 @@ build {
 
   provisioner "shell" {
     script = ".classic/bootstrap.sh"
-    environment_vars = [
-      "DOCKER_IMAGE=${var.docker_image}"
-    ]
   }
 
   post-processor "manifest" {
