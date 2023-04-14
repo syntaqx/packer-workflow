@@ -1,0 +1,26 @@
+name: Build and Deploy AMI
+
+on:
+  push:
+    branches: [main]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Packer
+      uses: hashicorp/setup-packer@v2
+
+    - name: Build AMI
+      run: |
+        packer build \
+        -var 'aws_access_key='"${{ env.AWS_ACCESS_KEY_ID }}"'' \
+        -var 'aws_secret_key='"${{ env.AWS_SECRET_ACCESS_KEY }}"'' \
+        -var 'aws_region='"${{ env.AWS_REGION }}"'' \
+        aws-ubuntu.pkr.hcl
