@@ -57,6 +57,11 @@ build {
     script = ".classic/bootstrap.sh"
   }
 
+  // provisioner "file" {
+  //   destination = "/var/www/html"
+  //   source      = "./"
+  // }
+
   post-processor "manifest" {
     output     = "manifest.json"
     strip_path = true
