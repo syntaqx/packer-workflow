@@ -38,7 +38,7 @@ EOF
 sudo systemctl daemon-reload
 
 # Start Docker container service
-sudo systemctl start example.service
+# sudo systemctl start example.service
 
 # Enable Docker container service to start at boot time
 sudo systemctl enable example.service
