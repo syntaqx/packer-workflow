@@ -1,4 +1,4 @@
-name: Build and Deploy AMI
+name: Build
 
 on:
   push:
@@ -18,9 +18,4 @@ jobs:
       uses: hashicorp/setup-packer@v2.0.0
 
     - name: Build AMI
-      run: |
-        packer build \
-        -var 'aws_access_key='"${{ env.AWS_ACCESS_KEY_ID }}"'' \
-        -var 'aws_secret_key='"${{ env.AWS_SECRET_ACCESS_KEY }}"'' \
-        -var 'aws_region='"${{ env.AWS_REGION }}"'' \
-        aws-ubuntu.pkr.hcl
+      run: packer build aws-ubuntu.pkr.hcl
