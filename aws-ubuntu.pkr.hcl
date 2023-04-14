@@ -12,13 +12,20 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
+variable "instance_type" {
+  type    = string
+  default = "t2.micro"
+}
+
+
 variable "ami_prefix" {
   type    = string
   default = "classic-example"
 }
 
 source "amazon-ebs" "ubuntu" {
-  region = "${var.aws_region}"
+  region        = "${var.aws_region}"
+  instance_type = "${var.instance_type}}"
 
   source_ami_filter {
     filters = {
@@ -30,12 +37,15 @@ source "amazon-ebs" "ubuntu" {
     most_recent = true
   }
 
-  instance_type  = "t2.small"
   ssh_username   = "ubuntu"
   ssh_agent_auth = false
 
   ami_name    = "${var.ami_prefix}-ubuntu-{{timestamp}}"
   ami_regions = ["${var.aws_region}"]
+
+  tags = {
+    "created-by" = "packer"
+  }
 }
 
 build {
