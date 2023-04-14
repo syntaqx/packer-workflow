@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "hashicorp.hcl"
+        "hashicorp.hcl",
+        "fredwangwang.vscode-hcl-format"
     ]
 }

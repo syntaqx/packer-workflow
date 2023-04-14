@@ -25,7 +25,7 @@ variable "ami_prefix" {
 
 source "amazon-ebs" "ubuntu" {
   region        = "${var.aws_region}"
-  instance_type = "${var.instance_type}}"
+  instance_type = "${var.instance_type}"
 
   source_ami_filter {
     filters = {
@@ -56,5 +56,10 @@ build {
 
   provisioner "shell" {
     script = ".classic/bootstrap.sh"
+  }
+
+  post-processor "manifest" {
+    output     = "manifest.json"
+    strip_path = true
   }
 }

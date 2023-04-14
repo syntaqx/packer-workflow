@@ -1,0 +1,5 @@
+{
+    "[hcl]": {
+        "editor.formatOnSave": true
+    }
+}

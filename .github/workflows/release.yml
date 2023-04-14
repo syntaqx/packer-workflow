@@ -8,6 +8,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      ami_id: ${{ steps.extract.outputs.ami_id }}
     steps:
     - uses: actions/checkout@v3
 
@@ -26,3 +28,16 @@ jobs:
 
     - name: Build AMI
       run: packer build .
+
+    - id: extract
+      name: Extract AMI ID
+      run: |
+        ami_id=$(jq -r '.builds[0].artifact_id|split(":")[1]' ./manifest.json)
+        echo "ami_id=$ami_id" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: [ build ]
+    steps:
+    -
+      name: Deploy to AWS
+      run: echo "Deploy to AWS using AMI ID ${{ needs.build.outputs.ami_id }}"
