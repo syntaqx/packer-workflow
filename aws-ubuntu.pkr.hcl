@@ -17,24 +17,25 @@ variable "ami_prefix" {
   default = "classic-example"
 }
 
-locals {
-  timestamp = regex_replace(timestamp(), "[- TZ:]", "")
-}
-
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "${var.ami_prefix}-ubuntu-${local.timestamp}"
-  instance_type = "t2.micro"
-  region        = "${var.aws_region}"
+  region = "${var.aws_region}"
+
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*"
-      root-device-type    = "ebs"
       virtualization-type = "hvm"
+      name                = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
+      root-device-type    = "ebs"
     }
-    most_recent = true
     owners      = ["099720109477"]
+    most_recent = true
   }
-  ssh_username = "ubuntu"
+
+  instance_type  = "t2.small"
+  ssh_username   = "ubuntu"
+  ssh_agent_auth = false
+
+  ami_name    = "${var.ami_prefix}-ubuntu-{{timestamp}}"
+  ami_regions = ["${var.aws_region}"]
 }
 
 build {
