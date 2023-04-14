@@ -2,19 +2,12 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
 
-  docker:
-    uses: ./.github/workflows/docker.yml
-    with:
-      push: true
-    secrets: inherit
-
-  packer:
+  build:
     runs-on: ubuntu-latest
-    needs: [ docker ]
     outputs:
       ami_id: ${{ steps.extract.outputs.ami_id }}
     steps:
@@ -34,7 +27,7 @@ jobs:
       run: packer init .
 
     - name: Build AMI
-      run: packer build --var docker_image=${{ needs.docker.outputs.image }} .
+      run: packer build .
 
     - id: extract
       name: Extract AMI ID
@@ -44,7 +37,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [ docker, packer ]
+    needs: [ build ]
     steps:
     -
       name: Deploy to AWS
