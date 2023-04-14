@@ -17,10 +17,14 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-
 variable "ami_prefix" {
   type    = string
   default = "classic-example"
+}
+
+variable "docker_image" {
+  type    = string
+  default = "syntaqx/packer-docker-workflow:latest"
 }
 
 source "amazon-ebs" "ubuntu" {
@@ -56,6 +60,9 @@ build {
 
   provisioner "shell" {
     script = ".classic/bootstrap.sh"
+    environment_vars = [
+      "DOCKER_IMAGE=${var.docker_image}"
+    ]
   }
 
   post-processor "manifest" {

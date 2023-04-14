@@ -6,14 +6,15 @@ on:
 
 jobs:
 
-  build-docker:
+  docker:
     uses: ./.github/workflows/docker.yml
     with:
       push: true
     secrets: inherit
 
-  build-packer:
+  packer:
     runs-on: ubuntu-latest
+    needs: [ docker ]
     outputs:
       ami_id: ${{ steps.extract.outputs.ami_id }}
     steps:
@@ -33,7 +34,7 @@ jobs:
       run: packer init .
 
     - name: Build AMI
-      run: packer build .
+      run: packer build --var docker_image=${{ needs.docker.outputs.image }} .
 
     - id: extract
       name: Extract AMI ID
@@ -43,7 +44,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [ build-docker, build-packer ]
+    needs: [ docker, packer ]
     steps:
     -
       name: Deploy to AWS

@@ -10,6 +10,13 @@ function wait_for_apt() {
 
 wait_for_apt
 
+# Ensure the $DOCKER_IMAGE variable is populated so we know which to start.
+DOCKER_IMAGE=${DOCKER_IMAGE:-}
+if [ -z "$DOCKER_IMAGE" ]; then
+    echo -e "\$DOCKER_IMAGE is empty or undefined, bootstrapping cannot occur"
+    exit 1
+fi
+
 # Update apt package index
 sudo apt-get update
 
@@ -38,7 +45,7 @@ Description=My Docker Container
 
 [Service]
 Restart=always
-ExecStart=/usr/bin/docker run -p 80:80 syntaqx/packer-docker-workflow
+ExecStart=/usr/bin/docker run -p 80:80 $DOCKER_IMAGE
 
 [Install]
 WantedBy=multi-user.target
