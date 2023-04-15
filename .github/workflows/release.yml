@@ -64,7 +64,12 @@ jobs:
     -
       name: Terraform Plan
       working-directory: terraform
-      run: terraform plan -var="ami_id=${{ needs.build.outputs.ami_id }}"
+      run: terraform plan -no-color -var="ami_id=${{ needs.build.outputs.ami_id }}"
+    # -
+    #   name: Terraform Apply
+    #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #   working-directory: terraform
+    #   run: terraform apply -auto-approve -var="ami_id=${{ needs.build.outputs.ami_id }}"
     -
       id: terraform
       name: Output URL to GitHub
