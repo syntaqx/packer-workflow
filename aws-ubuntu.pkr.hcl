@@ -54,7 +54,7 @@ build {
   ]
 
   provisioner "shell" {
-    script = "bootstrap.sh"
+    script = ".classic/bootstrap.sh"
   }
 
   // provisioner "file" {

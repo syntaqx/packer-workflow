@@ -24,10 +24,10 @@ jobs:
       uses: hashicorp/setup-packer@v2.0.0
 
     - name: Packer Init
-      run: packer init .classic/aws-ubuntu.pkr.hcl
+      run: packer init .
 
     - name: Build AMI
-      run: packer build .classic/aws-ubuntu.pkr.hcl
+      run: packer build .
 
     - id: extract
       name: Extract AMI ID
@@ -52,9 +52,9 @@ jobs:
         aws-region: us-east-1
     -
       name: Terraform Init
-      working-directory: .classic/terraform
+      working-directory: terraform
       run: terraform init
     -
       name: Terraform Plan
-      working-directory: .classic/terraform
+      working-directory: terraform
       run: terraform plan
