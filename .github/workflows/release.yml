@@ -24,10 +24,10 @@ jobs:
       uses: hashicorp/setup-packer@v2.0.0
 
     - name: Packer Init
-      run: packer init .
+      run: packer init .classic/aws-ubuntu.pkr.hcl
 
     - name: Build AMI
-      run: packer build .
+      run: packer build .classic/aws-ubuntu.pkr.hcl
 
     - id: extract
       name: Extract AMI ID
@@ -39,6 +39,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
+    - uses: actions/checkout@v3
     -
       name: Deploy to AWS
       run: echo "Deploy to AWS using AMI ID ${{ needs.build.outputs.ami_id }}"
+    -
+      name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    -
+      name: Terraform Init
+      working-directory: .classic/terraform
+      run: terraform init
+    -
+      name: Terraform Plan
+      working-directory: .classic/terraform
+      run: terraform plan
