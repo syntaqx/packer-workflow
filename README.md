@@ -17,4 +17,5 @@ so that the operational runtime and app runtimes are separate.
 ## Deployment
 
 Deployment is very simple currently in that it takes the `ami_id` provided from
-Packer in the `build` stage, and deploys an EC2 instance from it.
+Packer in the `build` stage, and deploys an EC2 instance from that AMI using
+Terraform.
