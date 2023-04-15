@@ -16,8 +16,5 @@ so that the operational runtime and app runtimes are separate.
 
 ## Deployment
 
-> WIP
-
-Deployment is very simple in that you must only take the `ami_id` provided from
-the `build` stage and either deploy a single EC2 image or roll many out using
-an autoscaling group.
+Deployment is very simple currently in that it takes the `ami_id` provided from
+Packer in the `build` stage, and deploys an EC2 instance from it.

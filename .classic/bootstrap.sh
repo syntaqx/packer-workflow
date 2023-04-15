@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-set -aueo pipefail
-set -euo pipefail
 
 main() {
     # Update apt package index
