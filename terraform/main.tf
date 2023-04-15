@@ -73,3 +73,7 @@ resource "aws_autoscaling_group" "example" {
     triggers = ["tag"]
   }
 }
+
+output "url" {
+  value = "https://${aws_autoscaling_group.example.name}.us-east-1.elb.amazonaws.com"
+}
