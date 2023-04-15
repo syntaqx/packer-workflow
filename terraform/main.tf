@@ -34,7 +34,7 @@ resource "aws_launch_template" "example" {
   name_prefix   = "classic-example"
   image_id      = var.ami_id
   instance_type = "t2.micro"
-  key_name      = "testing"
+  key_name      = "example"
 
   vpc_security_group_ids = [aws_security_group.example.id]
 

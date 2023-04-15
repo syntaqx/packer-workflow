@@ -16,6 +16,9 @@ so that the operational runtime and app runtimes are separate.
 
 ## Deployment
 
-Deployment is very simple currently in that it takes the `ami_id` provided from
-Packer in the `build` stage, and deploys an EC2 instance from that AMI using
-Terraform.
+Deployment is very simple: Once an AMI is available, Terraform updates the
+`aws_launch_template` and applies that update to an `aws_autoscaling_group`. The
+Terraform code here is just an example of what an implementation looks like, and
+likely isn't fully functional, but it's a good marker for what the project
+should be doing. Additional work around things like VPC, subnets, and target
+groups is necessary and are codified with placeholder values.
