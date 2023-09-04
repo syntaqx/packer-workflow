@@ -18,7 +18,7 @@ jobs:
     outputs:
       ami_id: ${{ steps.extract.outputs.ami_id }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -49,7 +49,7 @@ jobs:
       name: production
       url: ${{ steps.terraform.outputs.url }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     -
       name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
