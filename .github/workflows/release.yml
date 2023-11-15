@@ -28,7 +28,7 @@ jobs:
         aws-region: us-east-1
 
     - name: Setup HashiCorp Packer
-      uses: hashicorp/setup-packer@v2.0.0
+      uses: hashicorp/setup-packer@v2.0.1
 
     - name: Packer Init
       run: packer init .
